@@ -28,24 +28,24 @@ import * as filters from './filters' // global filters
  * please remove it before going online ! ! !
  */
 if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock');
-  mockXHR()
+    const {mockXHR} = require('../mock')
+    mockXHR()
 }
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium', // set element-ui default size
-});
+    size: Cookies.get('size') || 'medium' // set element-ui default size
+})
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
-});
+    Vue.filter(key, filters[key])
+})
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-});
+    el: '#app',
+    router,
+    store,
+    render: h => h(App)
+})
