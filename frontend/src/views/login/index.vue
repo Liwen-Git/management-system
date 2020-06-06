@@ -50,40 +50,15 @@
                        @click.native.prevent="handleLogin">
                 登录
             </el-button>
-
-            <div style="position:relative">
-                <div class="tips">
-                    <span>Username : admin</span>
-                    <span>Password : any</span>
-                </div>
-                <div class="tips">
-                    <span style="margin-right:18px;">Username : editor</span>
-                    <span>Password : any</span>
-                </div>
-
-                <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-                    Or connect with
-                </el-button>
-            </div>
         </el-form>
-
-        <el-dialog title="Or connect with" :visible.sync="showDialog">
-            Can not be simulated on local, so please combine you own business simulation! ! !
-            <br>
-            <br>
-            <br>
-            <social-sign/>
-        </el-dialog>
     </div>
 </template>
 
 <script>
     import {validUsername} from '@/utils/validate'
-    import SocialSign from './components/SocialSignin'
 
     export default {
         name: 'Login',
-        components: {SocialSign},
         data() {
             const validateUsername = (rule, value, callback) => {
                 if (!validUsername(value)) {
@@ -111,7 +86,6 @@
                 passwordType: 'password',
                 capsTooltip: false,
                 loading: false,
-                showDialog: false,
                 redirect: undefined,
                 otherQuery: {}
             }
@@ -209,8 +183,8 @@
     /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
     $bg: #283443;
-    $light_gray: #fff;
-    $cursor: #fff;
+    $light_gray: #606266;
+    $cursor: #606266;
 
     @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
         .login-container .el-input input {
@@ -244,7 +218,7 @@
 
         .el-form-item {
             border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.1);
+            background: #f6f4fc;
             border-radius: 5px;
             color: #454545;
         }
@@ -257,9 +231,10 @@
     $light_gray: #eee;
 
     .login-container {
+        background: url("~@/assets/login_images/login-background.jpg") center center fixed no-repeat;
+        background-size: cover;
         min-height: 100%;
         width: 100%;
-        background-color: $bg;
         overflow: hidden;
 
         .login-form {
@@ -267,7 +242,7 @@
             width: 520px;
             max-width: 100%;
             padding: 160px 35px 0;
-            margin: 0 auto;
+            margin: 0vh 3%;
             overflow: hidden;
         }
 
@@ -296,7 +271,7 @@
 
             .title {
                 font-size: 26px;
-                color: $light_gray;
+                color: rgba(14, 18, 26, 1);
                 margin: 0px auto 40px auto;
                 text-align: center;
                 font-weight: bold;
