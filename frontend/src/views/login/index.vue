@@ -46,6 +46,16 @@
                 </el-form-item>
             </el-tooltip>
 
+            <el-form-item prop="captcha">
+                <span class="svg-container">
+                    <svg-icon icon-class="captcha"/>
+                </span>
+                <el-input v-model="loginForm.captcha"></el-input>
+                <span class="show-captcha">
+                    <img :src="captchaSrc" @click="getCaptcha" alt="验证码">
+                </span>
+            </el-form-item>
+
             <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
                        @click.native.prevent="handleLogin">
                 登录
@@ -77,7 +87,8 @@
             return {
                 loginForm: {
                     username: 'admin',
-                    password: '111111'
+                    password: '111111',
+                    captcha: ''
                 },
                 loginRules: {
                     username: [{required: true, trigger: 'blur', validator: validateUsername}],
@@ -87,7 +98,8 @@
                 capsTooltip: false,
                 loading: false,
                 redirect: undefined,
-                otherQuery: {}
+                otherQuery: {},
+                captchaSrc: ''
             }
         },
         watch: {
@@ -103,6 +115,7 @@
             }
         },
         created() {
+            this.getCaptcha();
             // window.addEventListener('storage', this.afterQRScan)
         },
         mounted() {
@@ -155,6 +168,11 @@
                     }
                     return acc
                 }, {})
+            },
+            getCaptcha() {
+                this.get('/captcha').then(res => {
+                    this.captchaSrc = res.url;
+                })
             }
             // afterQRScan() {
             //   if (e.key === 'x-admin-oauth-code') {
@@ -284,6 +302,14 @@
             top: 7px;
             font-size: 16px;
             color: $dark_gray;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .show-captcha {
+            position: absolute;
+            right: 10px;
+            top: 7px;
             cursor: pointer;
             user-select: none;
         }

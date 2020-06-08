@@ -4,7 +4,7 @@ namespace App;
 
 class ResultCode
 {
-    const SUCCESS = 0;
+    const SUCCESS = 20000;
 
 
     const UNKNOWN = 500; // 未知错误
@@ -34,10 +34,14 @@ class ResultCode
     const TSP_DB_READONLY = 10051; // tsp数据库只读
     const TSP_REQUEST_FAIL = 10052; // 请求tsp系统失败
 
-    const UPLOAD_ERROR = 20001;   // 文件上传失败
-
     const SMS_SEND_ERROR = 30001;   // 短信发送失败
     const SMS_BUSINESS_LIMIT_CONTROL = 30015;  // 短信发送频率超过限制
+
+    const UPLOAD_ERROR = 40001;   // 文件上传失败
+
+    const ILLEGAL_TOKEN = 50008;    // 非法token
+    const OTHER_CLIENTS_LOGGED_IN = 50012;  // 其他客户端登录
+    const TOKEN_EXPIRED = 50014;    // token过期
 
 
     /************ 微信接口相关  **************/
