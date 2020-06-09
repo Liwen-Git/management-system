@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'PRC',
 
     /*
     |--------------------------------------------------------------------------
@@ -175,7 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        \Mews\Captcha\CaptchaServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
     ],
 
     /*
@@ -228,10 +228,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'Captcha' => \Mews\Captcha\Facades\Captcha::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
-        'JWTAuth' => \Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => \Tymon\JWTAuth\Facades\JWTFactory::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];

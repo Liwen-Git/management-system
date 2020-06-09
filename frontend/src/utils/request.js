@@ -43,6 +43,7 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     response => {
+        console.log(response);
         // 判断一下响应中是否有 token，如果有就直接使用此 token 替换掉本地的 token。
         const token = response.headers.authorization;
         if (token) {
@@ -73,6 +74,12 @@ service.interceptors.response.use(
                     })
                 })
             }
+
+            // 未登录
+            if (res.code === 10003) {
+                store.dispatch('user/resetToken')
+            }
+
             return Promise.reject(new Error(res.message || 'Error'))
         } else {
             return res.data;
