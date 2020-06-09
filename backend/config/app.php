@@ -229,6 +229,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Captcha' => \Mews\Captcha\Facades\Captcha::class,
+
+        'JWTAuth' => \Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => \Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];

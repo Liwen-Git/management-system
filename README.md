@@ -1,2 +1,6 @@
 # management-system
-laravel vue-element-admin
+
+#### JWT Generate secret key
+```php
+php artisan jwt:secret
+```

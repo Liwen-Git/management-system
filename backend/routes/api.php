@@ -20,4 +20,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::namespace('Api')->group(function () {
     Route::get('captcha', 'SelfController@captcha');
+    Route::post('login', 'AuthController@login');
 });
+
+Route::namespace('Api')
+    ->middleware('auth:api')
+    ->group(function() {
+        Route::post('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+        Route::post('me', 'AuthController@me');
+    });
