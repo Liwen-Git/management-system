@@ -19,7 +19,7 @@ service.interceptors.request.use(
             // let each request carry token
             // ['X-Token'] is a custom headers key
             // please modify it according to the actual situation
-            config.headers['X-Token'] = getToken()
+            config.headers['Authorization'] = getToken()
         }
         return config
     },
@@ -43,7 +43,14 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     response => {
-        const res = response.data
+        // 判断一下响应中是否有 token，如果有就直接使用此 token 替换掉本地的 token。
+        const token = response.headers.authorization;
+        if (token) {
+            // 如果 header 中存在 token，那么触发 refreshToken 方法，替换本地的 token
+            store.dispatch('user/refreshToken', token)
+        }
+
+        const res = response.data;
 
         // if the custom code is not 20000, it is judged as an error.
         if (res.code !== 20000) {
@@ -51,7 +58,7 @@ service.interceptors.response.use(
                 message: res.message || 'Error',
                 type: 'error',
                 duration: 5 * 1000
-            })
+            });
 
             // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
             if (res.code === 50008 || res.code === 50012 || res.code === 50014) {

@@ -29,6 +29,10 @@ return [
 
     'max_age' => 0,
 
+    /*
+     * 与axios对应的配置
+     * withCredentials: true, // send cookies when cross-domain requests
+     */
     'supports_credentials' => false,
 
 ];

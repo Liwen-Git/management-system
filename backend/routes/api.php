@@ -24,9 +24,8 @@ Route::namespace('Api')->group(function () {
 });
 
 Route::namespace('Api')
-    ->middleware('auth:api')
+    ->middleware('refresh.token')
     ->group(function() {
         Route::post('logout', 'AuthController@logout');
-        Route::post('refresh', 'AuthController@refresh');
         Route::post('me', 'AuthController@me');
     });

@@ -102,6 +102,12 @@ const actions = {
         })
     },
 
+    // refresh token
+    refreshToken({commit}, token) {
+        commit('SET_TOKEN', token);
+        setToken(token);
+    },
+
     // dynamically modify permissions
     changeRoles({commit, dispatch}, role) {
         return new Promise(async resolve => {
