@@ -14,9 +14,11 @@ class AuthController extends Controller
     {
         try {
             $this->validate(request(), [
-                'captcha' => 'required|captcha'
+                'key' => 'required',
+                'captcha' => 'required|captcha_api:'. request('key')
             ]);
         } catch (ValidationException $exception) {
+            return response()->json(['data' => $exception]);
             throw new BaseResponseException('验证码错误', ResultCode::PARAMS_INVALID);
         }
         $credentials = request(['name', 'password']);

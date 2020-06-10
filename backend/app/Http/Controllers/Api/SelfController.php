@@ -10,8 +10,8 @@ class SelfController extends Controller
 {
     public function captcha()
     {
-        $url = captcha_src();
+        $img = app('captcha')->create('default', true);
 
-        return Result::success(['url' => $url]);
+        return Result::success($img);
     }
 }

@@ -80,7 +80,8 @@
                 loginForm: {
                     username: 'admin',
                     password: '111111',
-                    captcha: ''
+                    captcha: '',
+                    key: ''
                 },
                 loginRules: {
                     username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
@@ -166,7 +167,8 @@
             },
             getCaptcha() {
                 this.get('/captcha').then(res => {
-                    this.captchaSrc = res.url;
+                    this.captchaSrc = res.img;
+                    this.loginForm.key = res.key;
                 })
             }
             // afterQRScan() {
