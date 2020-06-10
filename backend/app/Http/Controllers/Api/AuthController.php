@@ -43,19 +43,19 @@ class AuthController extends Controller
     /**
      * Log the user out (Invalidate the token).
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function logout()
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return Result::success('Successfully logged out');
     }
 
     /**
      * Refresh a token.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function refresh()
     {
@@ -65,9 +65,9 @@ class AuthController extends Controller
     /**
      * Get the token array structure.
      *
-     * @param  string $token
+     * @param string $token
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     protected function respondWithToken($token)
     {

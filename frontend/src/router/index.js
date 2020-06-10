@@ -79,7 +79,7 @@ export const constantRoutes = [
                 path: 'dashboard',
                 component: () => import('@/views/dashboard/index'),
                 name: 'Dashboard',
-                meta: {title: 'Dashboard', icon: 'dashboard', affix: true}
+                meta: {title: '仪表板', icon: 'dashboard', affix: true}
             }
         ]
     },
@@ -91,7 +91,7 @@ export const constantRoutes = [
                 path: 'index',
                 component: () => import('@/views/documentation/index'),
                 name: 'Documentation',
-                meta: {title: 'Documentation', icon: 'documentation', affix: true}
+                meta: {title: '文档', icon: 'documentation', affix: true}
             }
         ]
     },
@@ -104,7 +104,7 @@ export const constantRoutes = [
                 path: 'index',
                 component: () => import('@/views/guide/index'),
                 name: 'Guide',
-                meta: {title: 'Guide', icon: 'guide', noCache: true}
+                meta: {title: '指南', icon: 'guide', noCache: true}
             }
         ]
     },
@@ -118,7 +118,7 @@ export const constantRoutes = [
                 path: 'index',
                 component: () => import('@/views/profile/index'),
                 name: 'Profile',
-                meta: {title: 'Profile', icon: 'user', noCache: true}
+                meta: {title: '个人资料', icon: 'user', noCache: true}
             }
         ]
     }
@@ -136,9 +136,9 @@ export const asyncRoutes = [
         alwaysShow: true, // will always show the root menu
         name: 'Permission',
         meta: {
-            title: 'Permission',
+            title: '权限',
             icon: 'lock',
-            roles: ['admin', 'editor'] // you can set roles in root nav
+            roles: ['super_admin', 'editor'] // you can set roles in root nav
         },
         children: [
             {
@@ -147,7 +147,7 @@ export const asyncRoutes = [
                 name: 'PagePermission',
                 meta: {
                     title: 'Page Permission',
-                    roles: ['admin'] // or you can only set roles in sub nav
+                    roles: ['super_admin'] // or you can only set roles in sub nav
                 }
             },
             {
@@ -165,7 +165,7 @@ export const asyncRoutes = [
                 name: 'RolePermission',
                 meta: {
                     title: 'Role Permission',
-                    roles: ['admin']
+                    roles: ['super_admin']
                 }
             }
         ]

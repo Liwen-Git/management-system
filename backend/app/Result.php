@@ -8,6 +8,11 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class Result
 {
+    /**
+     * @param string $message
+     * @param array $data
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public static function success($message = '请求成功', $data = []) {
         if(is_array($message) or $message instanceof Arrayable){
             $data    = $message;
@@ -21,6 +26,12 @@ class Result
         ]);
     }
 
+    /**
+     * @param $code
+     * @param $message
+     * @param array $data
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public static function error($code, $message, $data = [])
     {
         return response([

@@ -27,5 +27,7 @@ Route::namespace('Api')
     ->middleware('refresh.token')
     ->group(function() {
         Route::post('logout', 'AuthController@logout');
-        Route::post('me', 'AuthController@me');
+        Route::post('me', 'AuthController@me'); // test token
+
+        Route::get('user/info', 'SelfController@userInfo');
     });
