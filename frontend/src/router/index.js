@@ -187,7 +187,7 @@ export const asyncRoutes = [
                 path: 'index',
                 component: () => import('@/views/icons/index'),
                 name: 'Icons',
-                meta: {title: 'Icons', icon: 'icon', noCache: true}
+                meta: {title: '图标', icon: 'icon', noCache: true, roles: ['editor']}
             }
         ]
     },

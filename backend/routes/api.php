@@ -36,4 +36,5 @@ Route::namespace('Api')
         Route::get('permission/list', 'PermissionController@list');
         Route::post('permission/add', 'PermissionController@add');
         Route::post('permission/edit', 'PermissionController@edit');
+        Route::post('permission/delete', 'PermissionController@delete');
     });

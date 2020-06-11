@@ -25,7 +25,8 @@ return [
 
     'allowed_headers' => ['*'],
 
-    'exposed_headers' => [],
+    // 允许响应头中携带 Access-Control-Expose-Headers : 'Authorization'
+    'exposed_headers' => ['Authorization'],
 
     'max_age' => 0,
 
