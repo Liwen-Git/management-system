@@ -96,7 +96,22 @@ class PermissionController extends Controller
 
         $id = request('id');
 
-        Permission::destroy($id);
+        // 有子权限 禁止删除
+        $check = Permission::where('pid', $id)->count();
+        if ($check > 0) {
+            throw new BaseResponseException('该权限存在子权限', ResultCode::DB_DELETE_FAIL);
+        }
+
+        DB::beginTransaction();
+        try {
+            // 删除权限 和 角色权限关联表 中的数据
+            Permission::destroy($id);
+            RolePermission::where('permission_id', $id)->delete();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw new BaseResponseException('删除失败', ResultCode::DB_DELETE_FAIL);
+        }
+        DB::commit();
 
         return Result::success();
     }

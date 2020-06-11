@@ -6,7 +6,7 @@
             <el-table-column prop="type" label="类型">
                 <template slot-scope="scope">
                     <span v-if="scope.row.type === 1">菜单</span>
-                    <span v-else-if="scope.row.type === 2">方法</span>
+                    <span v-else-if="scope.row.type === 2">指令</span>
                     <span v-else>---</span>
                 </template>
             </el-table-column>
@@ -29,7 +29,7 @@
                 </el-form-item>
                 <el-form-item prop="type" label="类型">
                     <el-radio v-model="formData.type" :label="1">菜单</el-radio>
-                    <el-radio v-model="formData.type" :label="2">方法</el-radio>
+                    <el-radio v-model="formData.type" :label="2">指令</el-radio>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="success" size="small" @click="submitMenu">确 定</el-button>

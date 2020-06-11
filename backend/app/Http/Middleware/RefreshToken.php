@@ -7,8 +7,8 @@ use App\ResultCode;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
@@ -52,6 +52,10 @@ class RefreshToken extends BaseMiddleware
                 // 如果捕获到此异常，即代表 refresh 也过期了，用户无法刷新令牌，需要重新登录。
                 throw new BaseResponseException('登陆过期，请重新登陆', ResultCode::TOKEN_EXPIRED);
             }
+        } catch (TokenBlacklistedException $exception){
+            Log::error('token失效，token被拉黑:'.$exception->getMessage(), ['exception' => json_encode($exception)]);
+            //当用户退出之后，token就会被拉黑，就会返回TokenBlacklistedException
+            throw new BaseResponseException('未登录', ResultCode::ILLEGAL_TOKEN);
         }
 
         // 在响应头中返回新的 token
