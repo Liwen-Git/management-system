@@ -37,4 +37,7 @@ Route::namespace('Api')
         Route::post('permission/add', 'PermissionController@add');
         Route::post('permission/edit', 'PermissionController@edit');
         Route::post('permission/delete', 'PermissionController@delete');
+
+        // 角色
+        Route::get('role/list', 'RoleController@list');
     });
