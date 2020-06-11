@@ -29,5 +29,11 @@ Route::namespace('Api')
         Route::post('logout', 'AuthController@logout');
         Route::post('me', 'AuthController@me'); // test token
 
+        // 获取 用户信息 权限
         Route::get('user/info', 'SelfController@userInfo');
+
+        // 权限列表
+        Route::get('permission/list', 'PermissionController@list');
+        Route::post('permission/add', 'PermissionController@add');
+        Route::post('permission/edit', 'PermissionController@edit');
     });

@@ -142,6 +142,14 @@ export const asyncRoutes = [
         },
         children: [
             {
+                path: 'list',
+                component: () => import('@/views/permission/list'),
+                name: 'PermissionList',
+                meta: {
+                    title: '权限列表'
+                }
+            },
+            {
                 path: 'page',
                 component: () => import('@/views/permission/page'),
                 name: 'PagePermission',

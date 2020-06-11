@@ -28,7 +28,7 @@ class RefreshToken extends BaseMiddleware
         try {
             $this->checkForToken($request);
         } catch (\Exception $exception) {
-            Log::error('请求未检测到token', ['data' => json_encode($request)]);
+            Log::error('请求未检测到token', ['exception' => json_encode($request)]);
             throw new BaseResponseException('未登录', ResultCode::UNLOGIN);
         }
 
@@ -48,7 +48,7 @@ class RefreshToken extends BaseMiddleware
                 // 使用一次性登录以保证此次请求的成功
                 Auth::guard('api')->onceUsingId($this->auth->manager()->getPayloadFactory()->buildClaimsCollection()->toPlainArray()['sub']);
             } catch (JWTException $exception) {
-                Log::error($exception->getMessage());
+                Log::error('刷新token失败:'.$exception->getMessage(), ['exception' => json_encode($exception)]);
                 // 如果捕获到此异常，即代表 refresh 也过期了，用户无法刷新令牌，需要重新登录。
                 throw new BaseResponseException('登陆过期，请重新登陆', ResultCode::TOKEN_EXPIRED);
             }
