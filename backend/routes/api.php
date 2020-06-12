@@ -40,4 +40,5 @@ Route::namespace('Api')
 
         // 角色
         Route::get('role/list', 'RoleController@list');
+        Route::post('role/add', 'RoleController@add');
     });

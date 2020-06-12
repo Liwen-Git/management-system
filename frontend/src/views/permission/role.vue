@@ -68,7 +68,7 @@
         id: '',
         name: '',
         description: '',
-        routes: []
+        permission_id_arr: []
     };
 
     export default {
@@ -150,7 +150,7 @@
                 return data
             },
             handleAddRole() {
-                this.role = Object.assign({}, defaultRole)
+                this.role = Object.assign({}, defaultRole);
                 if (this.$refs.tree) {
                     this.$refs.tree.setCheckedKeys([])
                 }
@@ -162,7 +162,6 @@
                 this.dialogVisible = true;
                 this.checkStrictly = true;
                 this.role = deepClone(scope.row);
-                console.log(this.role);
                 this.$nextTick(() => {
                     this.$refs.tree.setCheckedKeys(this.role.permission_id_arr);
                     // set checked state of a node not affects its father and child nodes
@@ -205,34 +204,34 @@
                 return res
             },
             async confirmRole() {
-                const isEdit = this.dialogType === 'edit'
+                const isEdit = this.dialogType === 'edit';
 
-                const checkedKeys = this.$refs.tree.getCheckedKeys()
-                this.role.routes = this.generateTree(deepClone(this.serviceRoutes), '/', checkedKeys)
+                this.role.permission_id_arr = this.$refs.tree.getCheckedKeys();
 
                 if (isEdit) {
-                    await updateRole(this.role.key, this.role)
+                    await updateRole(this.role);
                     for (let index = 0; index < this.rolesList.length; index++) {
-                        if (this.rolesList[index].key === this.role.key) {
-                            this.rolesList.splice(index, 1, Object.assign({}, this.role))
+                        if (this.rolesList[index].id === this.role.id) {
+                            this.rolesList.splice(index, 1, Object.assign({}, this.role));
                             break
                         }
                     }
                 } else {
-                    const {data} = await addRole(this.role)
-                    this.role.key = data.key
+                    const data = await addRole(this.role);
+                    this.role.id = data.id;
                     this.rolesList.push(this.role)
                 }
 
-                const {description, key, name} = this.role
-                this.dialogVisible = false
+                console.log('role', this.role);
+                const {description, id, name} = this.role;
+                this.dialogVisible = false;
                 this.$notify({
                     title: 'Success',
                     dangerouslyUseHTMLString: true,
                     message: `
-                            <div>Role Key: ${key}</div>
-                            <div>Role Name: ${name}</div>
-                            <div>Description: ${description}</div>
+                            <div>角色ID: ${id}</div>
+                            <div>角色名称: ${name}</div>
+                            <div>角色描述: ${description}</div>
                             `,
                     type: 'success'
                 })

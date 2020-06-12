@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
  * Class Role
  * @package App\Http\Modules
  * @property string $name
+ * @property string $description
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */

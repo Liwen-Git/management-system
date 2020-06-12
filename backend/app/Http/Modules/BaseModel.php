@@ -34,6 +34,7 @@ use Illuminate\Support\Carbon;
  * @method static static orderBy($column, $direction = 'asc')
  * @method static static orderByDesc($column)
  * @method static static withTrashed()
+ * @method static static insert($array)
  * @method static int count($columns = '*')
  * @method static static has($relation, $operator = '>=', $count = 1, $boolean = 'and', Closure $callback = null)
  * @method static static whereHas($relation, Closure $callback = null, $operator = '>=', $count = 1)

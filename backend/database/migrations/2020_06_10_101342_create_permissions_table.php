@@ -15,8 +15,8 @@ class CreatePermissionsTable extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->comment('权限名称');
-            $table->string('url')->comment('权限参数');
+            $table->string('name')->unique()->comment('权限名称');
+            $table->string('url')->unique()->comment('权限参数');
             $table->tinyInteger('type')->comment('类型 1-菜单 2-指令');
             $table->integer('pid')->comment('父级id');
             $table->integer('level')->comment('层级');
