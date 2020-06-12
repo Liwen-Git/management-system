@@ -30,9 +30,10 @@ export function updateRole(data) {
   })
 }
 
-export function deleteRole() {
+export function deleteRole(data) {
   return request({
     url: `/role/delete`,
-    method: 'post'
+    method: 'post',
+    data
   })
 }

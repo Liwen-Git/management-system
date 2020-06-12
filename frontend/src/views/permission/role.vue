@@ -169,17 +169,17 @@
                 })
             },
             handleDelete({$index, row}) {
-                this.$confirm('Confirm to remove the role?', 'Warning', {
-                    confirmButtonText: 'Confirm',
-                    cancelButtonText: 'Cancel',
+                this.$confirm('确定删除该角色吗?', '警告', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
                     type: 'warning'
                 })
                     .then(async () => {
-                        await deleteRole(row.key)
-                        this.rolesList.splice($index, 1)
+                        await deleteRole({id: row.id});
+                        this.rolesList.splice($index, 1);
                         this.$message({
                             type: 'success',
-                            message: 'Delete succed!'
+                            message: '删除成功!'
                         })
                     })
                     .catch(err => {

@@ -70,6 +70,8 @@ class RoleController extends Controller
             throw new BaseResponseException('编辑角色失败:'.$exception->getMessage(), ResultCode::DB_UPDATE_FAIL);
         }
         DB::commit();
+
+        return Result::success($role);
     }
 
     /**
@@ -117,5 +119,7 @@ class RoleController extends Controller
             throw new BaseResponseException('删除角色失败:'.$exception->getMessage(), ResultCode::DB_DELETE_FAIL);
         }
         DB::commit();
+
+        return Result::success();
     }
 }
