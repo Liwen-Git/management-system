@@ -43,4 +43,10 @@ Route::namespace('Api')
         Route::post('role/add', 'RoleController@add');
         Route::post('role/edit', 'RoleController@edit');
         Route::post('role/delete', 'RoleController@delete');
+
+        // 用户
+        Route::get('user/list', 'UserController@list');
+        Route::post('user/add', 'UserController@add');
+        Route::post('user/delete', 'UserController@delete');
+        Route::post('user/change/password', 'UserController@changePassword');
     });

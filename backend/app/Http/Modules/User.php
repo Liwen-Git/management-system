@@ -68,4 +68,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Role::class);
     }
+
+    // 超级用户
+    const SUPER_USER = 1;
 }

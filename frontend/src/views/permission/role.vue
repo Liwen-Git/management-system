@@ -1,8 +1,10 @@
 <template>
     <div class="app-container">
-        <el-button type="primary" @click="handleAddRole">新增角色</el-button>
+        <el-form inline>
+            <el-button size="small" class="fr" type="success" @click="handleAddRole">新增角色</el-button>
+        </el-form>
 
-        <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
+        <el-table :data="rolesList" style="width: 100%;margin-top:30px;">
             <el-table-column align="center" label="ID" width="220">
                 <template slot-scope="scope">
                     {{ scope.row.id }}

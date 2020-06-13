@@ -19,8 +19,17 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+/**
+ * axios get and post
+ */
 import api from './api/index'
 Vue.use(api);
+
+/**
+ * 全局引用 分页组件
+ */
+import Pagination from './components/Pagination/index'
+Vue.component('Pagination', Pagination);
 
 /**
  * If you don't want to use mock-server
