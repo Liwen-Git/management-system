@@ -18,6 +18,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property integer $role_id
  * @property integer $is_super
  *
+ * @method static static find($id, $columns = ['*'])
+ * @method static static where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static int count($columns = '*')
  */
 class User extends Authenticatable implements JWTSubject
 {

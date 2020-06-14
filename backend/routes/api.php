@@ -47,6 +47,7 @@ Route::namespace('Api')
         // 用户
         Route::get('user/list', 'UserController@list');
         Route::post('user/add', 'UserController@add');
+        Route::post('user/edit', 'UserController@edit');
         Route::post('user/delete', 'UserController@delete');
         Route::post('user/change/password', 'UserController@changePassword');
     });

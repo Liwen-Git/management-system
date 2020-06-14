@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Exceptions\BaseResponseException;
 use App\Http\Modules\User;
 use App\Result;
+use App\ResultCode;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -30,6 +32,35 @@ class UserController extends Controller
         $user->password = Hash::make(request('password'));
         $user->role_id = request('role_id');
         $user->is_super = 0;
+        $user->save();
+
+        return Result::success($user);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws ValidationException
+     */
+    public function edit()
+    {
+        $this->validate(request(), [
+            'id' => 'required|integer',
+            'name' => 'required',
+            'email' => 'email',
+            'role_id' => 'required|integer',
+        ]);
+
+        $check = User::where('id', '<>', request('id'))
+            ->where('name', request('name'))
+            ->count();
+        if ($check > 0) {
+            throw new BaseResponseException('用户名重复', ResultCode::PARAMS_INVALID);
+        }
+
+        $user = User::find(request('id'));
+        $user->name = request('name');
+        $user->email = request('email');
+        $user->role_id = request('role_id');
         $user->save();
 
         return Result::success($user);

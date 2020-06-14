@@ -14,6 +14,7 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
+                    <el-button type="primary" size="small" @click="goToEdit(scope.row)">编 辑</el-button>
                     <el-button type="danger" size="small" @click="goToDelete(scope.row)">删 除</el-button>
                 </template>
             </el-table-column>
@@ -42,10 +43,10 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item prop="password" label="密码" required>
+                <el-form-item v-if="type === 'add'" prop="password" label="密码" required>
                     <el-input v-model="formData.password" type="password" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item prop="password_confirmation" label="确认密码" required>
+                <el-form-item v-if="type === 'add'" prop="password_confirmation" label="确认密码" required>
                     <el-input v-model="formData.password_confirmation" type="password" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
@@ -58,6 +59,8 @@
 </template>
 
 <script>
+    import {deepClone} from '../../utils';
+
     export default {
         name: 'PermissionUser',
         data() {
@@ -101,6 +104,7 @@
                     password: '',
                     password_confirmation: ''
                 },
+                type: '',
                 formRules: {
                     name: [
                         {required: true, message: '用户名不能为空', trigger: 'blur'},
@@ -132,8 +136,21 @@
                 })
             },
             goToAdd() {
+                this.type = 'add';
                 this.dialogTitle = '添加角色';
                 this.formData.id = 0;
+                this.showDialog = true;
+            },
+            goToEdit(row) {
+                this.type = 'edit';
+                this.dialogTitle = '编辑角色';
+                const clone = deepClone(row);
+                this.formData  = {
+                    id: clone.id,
+                    name: clone.name,
+                    email: clone.email,
+                    role_id: clone.role_id
+                };
                 this.showDialog = true;
             },
             getRoleList() {
@@ -144,11 +161,19 @@
             submitUser() {
                 this.$refs.userForm.validate(valid => {
                     if (valid) {
-                        this.post('/user/add', this.formData).then(() => {
-                            this.$message.success('用户添加成功');
-                            this.getList();
-                            this.cancelForm();
-                        })
+                        if (this.type === 'add') {
+                            this.post('/user/add', this.formData).then(() => {
+                                this.$message.success('用户添加成功');
+                                this.getList();
+                                this.cancelForm();
+                            })
+                        } else {
+                            this.post('/user/edit', this.formData).then(() => {
+                                this.$message.success('用户编辑成功');
+                                this.getList();
+                                this.cancelForm();
+                            })
+                        }
                     }
                 })
             },
