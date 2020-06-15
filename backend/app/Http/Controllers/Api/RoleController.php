@@ -32,6 +32,10 @@ class RoleController extends Controller
             'permission_id_arr' => 'required|array'
         ]);
 
+        if (request('name') == 'super_admin') {
+            throw new BaseResponseException('不能使用该名称', ResultCode::PARAMS_INVALID);
+        }
+
         DB::beginTransaction();
         try {
             $role = Role::create(request()->except(['id', 'permission_id_arr']));
@@ -56,6 +60,10 @@ class RoleController extends Controller
             'id' => 'required|integer'
         ]);
         $id = request('id');
+
+        if (request('name') == 'super_admin') {
+            throw new BaseResponseException('不能使用该名称', ResultCode::PARAMS_INVALID);
+        }
 
         DB::beginTransaction();
         try {

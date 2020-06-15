@@ -2,34 +2,36 @@ import {asyncRoutes, constantRoutes} from '@/router'
 
 /**
  * Use meta.role to determine if the current user has permission
- * @param roles
+ * @param permissions
  * @param route
  */
-function hasPermission(roles, route) {
-    if (route.meta && route.meta.roles) {
-        return roles.some(role => route.meta.roles.includes(role))
+function hasPermission(permissions, route) {
+    if (route.children) {
+        return true;
+    } else if (route.name) {
+        return permissions.indexOf(route.name) >= 0;
     } else {
-        return true
+        return false;
     }
 }
 
 /**
  * Filter asynchronous routing tables by recursion
  * @param routes asyncRoutes
- * @param roles
+ * @param permissions
  */
-export function filterAsyncRoutes(routes, roles) {
-    const res = []
+export function filterAsyncRoutes(routes, permissions) {
+    const res = [];
 
     routes.forEach(route => {
-        const tmp = {...route}
-        if (hasPermission(roles, tmp)) {
+        const tmp = {...route};
+        if (hasPermission(permissions, tmp)) {
             if (tmp.children) {
-                tmp.children = filterAsyncRoutes(tmp.children, roles)
+                tmp.children = filterAsyncRoutes(tmp.children, permissions)
             }
             res.push(tmp)
         }
-    })
+    });
 
     return res
 }
@@ -47,15 +49,15 @@ const mutations = {
 }
 
 const actions = {
-    generateRoutes({commit}, roles) {
+    generateRoutes({commit}, {roles, permissions}) {
         return new Promise(resolve => {
-            let accessedRoutes
-            if (roles.includes('admin')) {
+            let accessedRoutes;
+            if (roles.includes('super_admin')) {
                 accessedRoutes = asyncRoutes || []
             } else {
-                accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+                accessedRoutes = filterAsyncRoutes(asyncRoutes, permissions)
             }
-            commit('SET_ROUTES', accessedRoutes)
+            commit('SET_ROUTES', accessedRoutes);
             resolve(accessedRoutes)
         })
     }

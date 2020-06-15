@@ -137,8 +137,7 @@ export const asyncRoutes = [
         name: 'Permission',
         meta: {
             title: '权限',
-            icon: 'lock',
-            roles: ['super_admin', 'editor'] // you can set roles in root nav
+            icon: 'lock'
         },
         children: [
             {
@@ -171,7 +170,6 @@ export const asyncRoutes = [
                 name: 'PagePermission',
                 meta: {
                     title: '页面权限',
-                    roles: ['super_admin'] // or you can only set roles in sub nav
                 }
             },
             {
@@ -194,7 +192,7 @@ export const asyncRoutes = [
                 path: 'index',
                 component: () => import('@/views/icons/index'),
                 name: 'Icons',
-                meta: {title: '图标', icon: 'icon', noCache: true, roles: ['editor']}
+                meta: {title: '图标', icon: 'icon', noCache: true}
             }
         ]
     },
