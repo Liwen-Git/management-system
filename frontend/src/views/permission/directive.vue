@@ -1,9 +1,8 @@
 <template>
     <div class="app-container">
-        <switch-roles @change="handleRolesChange"/>
         <div :key="key" style="margin-top:30px;">
             <div>
-                <span v-permission="['admin']" class="permission-alert">
+                <span v-permission="'xx.update'" class="permission-alert">
                   Only
                   <el-tag class="permission-tag" size="small">admin</el-tag> can see this
                 </span>
@@ -42,7 +41,7 @@
             </aside>
 
             <el-tabs type="border-card" style="width:550px;">
-                <el-tab-pane v-if="checkPermission(['admin'])" label="Admin">
+                <el-tab-pane v-if="checkPermission('xx.add')" label="Admin">
                     Admin can see this
                     <el-tag class="permission-sourceCode" type="info">
                         v-if="checkPermission(['admin'])"
@@ -70,11 +69,9 @@
 <script>
     import permission from '@/directive/permission/index.js' // 权限判断指令
     import checkPermission from '@/utils/permission' // 权限判断函数
-    import SwitchRoles from './components/SwitchRoles'
 
     export default {
         name: 'DirectivePermission',
-        components: {SwitchRoles},
         directives: {permission},
         data() {
             return {
