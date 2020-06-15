@@ -67,7 +67,7 @@ class RoleController extends Controller
 
         DB::beginTransaction();
         try {
-            $role = Role::first($id);
+            $role = Role::find($id);
             $role->update(request()->all(['name', 'description']));
 
             $permissionIdArr = request('permission_id_arr');
