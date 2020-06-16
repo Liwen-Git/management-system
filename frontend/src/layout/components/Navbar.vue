@@ -1,8 +1,10 @@
 <template>
     <div class="navbar">
+        <!-- 菜单展开 缩小 -->
         <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container"
                    @toggleClick="toggleSideBar"/>
 
+        <!-- 面包屑 -->
         <breadcrumb id="breadcrumb-container" class="breadcrumb-container"/>
 
         <div class="right-menu">

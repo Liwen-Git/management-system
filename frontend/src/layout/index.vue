@@ -4,7 +4,9 @@
         <sidebar class="sidebar-container"/> <!-- menu -->
         <div :class="{hasTagsView:needTagsView}" class="main-container">
             <div :class="{'fixed-header':fixedHeader}">
+                <!-- 面包屑 搜索 全屏 用户下拉列表 等 -->
                 <navbar/>
+                <!-- 标签栏 -->
                 <tags-view v-if="needTagsView"/>
             </div>
             <app-main/>
