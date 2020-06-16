@@ -7,6 +7,7 @@ import {asyncRoutes, constantRoutes} from '@/router'
  */
 function hasPermission(permissions, route) {
     if (route.children) {
+        // 因为可能权限只勾选了子权限，父权限为半勾选，未写入数据库，所以只要有children就保留，然后再在deleteChildrenEmpty函数中处理children为空的情况
         return true;
     } else if (route.name) {
         return permissions.indexOf(route.name) >= 0;
@@ -36,6 +37,25 @@ export function filterAsyncRoutes(routes, permissions) {
     return res
 }
 
+// 动态路由 去除child为0的，保留alwaysShow为true的
+function deleteChildrenEmpty(routesTmp) {
+    const access = [];
+    routesTmp.forEach((route) => {
+        if (!route.children || route.alwaysShow) {
+            // 没有子路由的都是有权限的，name在权限列表里面的
+            access.push(route);
+        } else if (route.children && route.children.length > 0) {
+            // 递归循环子路由，子路由的children大于0则保留
+            route.children = deleteChildrenEmpty(route.children);
+            if (route.children.length > 0) {
+                access.push(route);
+            }
+        }
+    });
+
+    return access;
+}
+
 const state = {
     routes: [],
     addRoutes: []
@@ -55,7 +75,9 @@ const actions = {
             if (roles.includes('super_admin')) {
                 accessedRoutes = asyncRoutes || []
             } else {
-                accessedRoutes = filterAsyncRoutes(asyncRoutes, permissions)
+                accessedRoutes = filterAsyncRoutes(asyncRoutes, permissions);
+
+                accessedRoutes = deleteChildrenEmpty(accessedRoutes);
             }
             commit('SET_ROUTES', accessedRoutes);
             resolve(accessedRoutes)

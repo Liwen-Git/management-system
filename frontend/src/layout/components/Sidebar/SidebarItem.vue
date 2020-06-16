@@ -64,10 +64,10 @@
                         return false
                     } else {
                         // Temp set(will be used if only has one showing child)
-                        this.onlyOneChild = item
+                        this.onlyOneChild = item;
                         return true
                     }
-                })
+                });
 
                 // When there is only one child router, the child router is displayed by default
                 if (showingChildren.length === 1) {

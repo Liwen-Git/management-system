@@ -17,7 +17,7 @@ import nestedRouter from './modules/nested'
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  *
  * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
+ * alwaysShow: true               if set true, will always show the root menu (在一级路由上使用)
  *                                if not set alwaysShow, when item has more than one children route,
  *                                it will becomes nested mode, otherwise not show the root menu
  * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
@@ -327,7 +327,6 @@ export const asyncRoutes = [
         path: '/zip',
         component: Layout,
         redirect: '/zip/download',
-        alwaysShow: true,
         name: 'Zip',
         meta: {title: 'Zip', icon: 'zip'},
         children: [
