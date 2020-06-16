@@ -21,9 +21,18 @@ import * as filters from './filters' // global filters
 
 /**
  * axios get and post
+ * 使用 this.get() | this.post() 调用
  */
 import api from './api/index'
 Vue.use(api);
+
+/**
+ * moment 时间组件
+ * 使用 this.$moment() 调用
+ */
+import moment from 'moment'
+moment.locale('zh-cn');
+Vue.prototype.$moment = moment;
 
 /**
  * 全局引用 分页组件
