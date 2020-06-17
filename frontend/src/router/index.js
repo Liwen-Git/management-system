@@ -79,7 +79,7 @@ export const constantRoutes = [
                 path: 'dashboard',
                 component: () => import('@/views/dashboard/index'),
                 name: 'Dashboard',
-                meta: {title: '仪表板', icon: 'dashboard', affix: true}
+                meta: {title: '仪表盘', icon: 'dashboard', affix: true}
             }
         ]
     },
@@ -118,7 +118,7 @@ export const constantRoutes = [
                 path: 'index',
                 component: () => import('@/views/profile/index'),
                 name: 'Profile',
-                meta: {title: '个人资料', icon: 'user', noCache: true}
+                meta: {title: '个人简介', icon: 'user', noCache: true}
             }
         ]
     }
@@ -132,7 +132,7 @@ export const asyncRoutes = [
     {
         path: '/permission',
         component: Layout,
-        redirect: '/permission/page',
+        redirect: 'noRedirect',
         alwaysShow: true, // will always show the root menu
         name: 'Permission',
         meta: {
@@ -169,7 +169,7 @@ export const asyncRoutes = [
                 component: () => import('@/views/permission/page'),
                 name: 'PagePermission',
                 meta: {
-                    title: '页面权限',
+                    title: '页面权限'
                 }
             },
             {

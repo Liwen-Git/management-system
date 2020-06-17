@@ -28,23 +28,42 @@
                 </div>
                 <el-dropdown-menu slot="dropdown">
                     <router-link to="/profile/index">
-                        <el-dropdown-item>Profile</el-dropdown-item>
+                        <el-dropdown-item>个人简介</el-dropdown-item>
                     </router-link>
                     <router-link to="/">
-                        <el-dropdown-item>Dashboard</el-dropdown-item>
+                        <el-dropdown-item>仪表盘</el-dropdown-item>
                     </router-link>
-                    <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
-                        <el-dropdown-item>Github</el-dropdown-item>
-                    </a>
-                    <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-                        <el-dropdown-item>Docs</el-dropdown-item>
-                    </a>
+<!--                    <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">-->
+<!--                        <el-dropdown-item>Github</el-dropdown-item>-->
+<!--                    </a>-->
+<!--                    <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">-->
+<!--                        <el-dropdown-item>Docs</el-dropdown-item>-->
+<!--                    </a>-->
+                    <el-dropdown-item @click.native="showDialog = true">
+                        <span style="display:block;">修改密码</span>
+                    </el-dropdown-item>
                     <el-dropdown-item divided @click.native="logout">
-                        <span style="display:block;">Log Out</span>
+                        <span style="display:block;">退 出</span>
                     </el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
+
+        <!--修改密码弹窗-->
+        <el-dialog :visible.sync="showDialog" title="修改密码" width="30%">
+            <el-form :model="formData" :rules="formRules" ref="passwordForm" label-width="100px" size="small">
+                <el-form-item prop="password" label="密码" required>
+                    <el-input v-model="formData.password" type="password" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item prop="password_confirmation" label="确认密码" required>
+                    <el-input v-model="formData.password_confirmation" type="password" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="success" size="small" @click="changePassword">确 定</el-button>
+                    <el-button size="small" @click="cancelForm">取 消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 
@@ -58,6 +77,43 @@
     import Search from '@/components/HeaderSearch'
 
     export default {
+        data() {
+            const validatePass = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入密码'));
+                } else {
+                    if (this.formData.password_confirmation !== '') {
+                        this.$refs.passwordForm.validateField('password_confirmation');
+                    }
+                    callback();
+                }
+            };
+            const validatePassConfirm = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请再次输入密码'));
+                } else if (value !== this.formData.password) {
+                    callback(new Error('两次输入密码不一致!'));
+                } else {
+                    callback();
+                }
+            };
+            return {
+                showDialog: false,
+                formData: {
+                    password: '',
+                    password_confirmation: ''
+                },
+                formRules: {
+                    password: [
+                        {validator: validatePass, trigger: 'blur'},
+                        {min: 6, max: 30, message: '密码长度为6-30个字符', trigger: 'blur'}
+                    ],
+                    password_confirmation: [
+                        {validator: validatePassConfirm, trigger: 'blur'}
+                    ]
+                }
+            }
+        },
         components: {
             Breadcrumb,
             Hamburger,
@@ -80,6 +136,20 @@
             async logout() {
                 await this.$store.dispatch('user/logout')
                 this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+            },
+            changePassword() {
+                this.$refs.passwordForm.validate(valid => {
+                    if (valid) {
+                        this.post('/user/change/password', this.formData).then(() => {
+                            this.$message.success('修改密码成功');
+                            this.cancelForm();
+                        })
+                    }
+                })
+            },
+            cancelForm() {
+                this.showDialog = false;
+                this.$refs.passwordForm.resetFields();
             }
         }
     }
