@@ -20,14 +20,14 @@ import nestedRouter from './modules/nested'
  * alwaysShow: true               if set true, will always show the root menu (在一级路由上使用)
  *                                if not set alwaysShow, when item has more than one children route,
  *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
+ * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb (面包屑不跳转)
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
     roles: ['admin','editor']    control the page roles (you can set multiple roles)
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar
     noCache: true                if set true, the page will no be cached(default is false)
-    affix: true                  if set true, the tag will affix in the tags-view
+    affix: true                  if set true, the tag will affix in the tags-view (标签栏不关闭)
     breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
@@ -91,7 +91,7 @@ export const constantRoutes = [
                 path: 'index',
                 component: () => import('@/views/documentation/index'),
                 name: 'Documentation',
-                meta: {title: '文档', icon: 'documentation', affix: true}
+                meta: {title: '文档', icon: 'documentation', affix: false}
             }
         ]
     },
