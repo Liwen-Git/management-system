@@ -8,15 +8,23 @@
             <dropzone id="myVueDropzone" url="https://httpbin.org/post" @dropzone-removedFile="dropzoneR"
                       @dropzone-success="dropzoneS"/>
         </div>
+
+        <aside style="margin-top: 15px;">图片上传组件</aside>
+        <upload-image></upload-image>
     </div>
 </template>
 
 <script>
     import Dropzone from '@/components/Dropzone'
 
+    import UploadImage from '@/components/Upload/image.vue'
+
     export default {
         name: 'DropzoneDemo',
-        components: {Dropzone},
+        components: {
+            Dropzone,
+            UploadImage
+        },
         methods: {
             dropzoneS(file) {
                 console.log(file)

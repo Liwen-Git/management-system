@@ -50,4 +50,7 @@ Route::namespace('Api')
         Route::post('user/edit', 'UserController@edit');
         Route::post('user/delete', 'UserController@delete');
         Route::post('user/change/password', 'UserController@changePassword');
+
+        // 上传
+        Route::post('upload/image', 'UploadController@uploadImage');
     });
