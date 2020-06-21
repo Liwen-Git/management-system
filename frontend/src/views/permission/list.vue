@@ -76,7 +76,7 @@
         methods: {
             getList() {
                 this.tableLoading = true;
-                this.get('/permission/list').then(data => {
+                this.axiosGet('/permission/list').then(data => {
                     this.treeList = [{
                         id: '0',
                         name: '全部',
@@ -103,13 +103,13 @@
                 this.$refs.menuForm.validate(valid => {
                     if (valid) {
                         if (this.formData.id) {
-                            this.post('/permission/edit', this.formData).then(() => {
+                            this.axiosPost('/permission/edit', this.formData).then(() => {
                                 this.$message.success('编辑成功');
                                 this.getList();
                                 this.cancelForm();
                             })
                         } else {
-                            this.post('/permission/add', this.formData).then(() => {
+                            this.axiosPost('/permission/add', this.formData).then(() => {
                                 this.$message.success('添加成功');
                                 this.getList();
                                 this.cancelForm();
@@ -136,7 +136,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.post('/permission/delete', {id: row.id}).then(() => {
+                    this.axiosPost('/permission/delete', {id: row.id}).then(() => {
                         this.$message.success('删除成功');
                         this.getList();
                     })

@@ -129,7 +129,7 @@
         methods: {
             getList() {
                 this.tableLoading = true;
-                this.get('/user/list', this.searchParam).then(res => {
+                this.axiosGet('/user/list', this.searchParam).then(res => {
                     this.list = res.list;
                     this.total = res.total;
                     this.tableLoading = false;
@@ -154,7 +154,7 @@
                 this.showDialog = true;
             },
             getRoleList() {
-                this.get('/role/list').then(res => {
+                this.axiosGet('/role/list').then(res => {
                     this.allRole = res;
                 })
             },
@@ -162,13 +162,13 @@
                 this.$refs.userForm.validate(valid => {
                     if (valid) {
                         if (this.type === 'add') {
-                            this.post('/user/add', this.formData).then(() => {
+                            this.axiosPost('/user/add', this.formData).then(() => {
                                 this.$message.success('用户添加成功');
                                 this.getList();
                                 this.cancelForm();
                             })
                         } else {
-                            this.post('/user/edit', this.formData).then(() => {
+                            this.axiosPost('/user/edit', this.formData).then(() => {
                                 this.$message.success('用户编辑成功');
                                 this.getList();
                                 this.cancelForm();
@@ -187,7 +187,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.post('/user/delete', {id: row.id}).then(() => {
+                    this.axiosPost('/user/delete', {id: row.id}).then(() => {
                         this.$message.success('删除成功');
                         this.getList();
                     })

@@ -21,7 +21,7 @@ import * as filters from './filters' // global filters
 
 /**
  * axios get and post
- * 使用 this.get() | this.post() 调用
+ * 使用 this.axiosGet() | this.axiosPost() 调用
  */
 import api from './api/index'
 Vue.use(api);

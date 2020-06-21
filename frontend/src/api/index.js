@@ -2,7 +2,7 @@ import request from '../utils/request'
 
 export default {
     install(Vue, options) {
-        Vue.prototype.get = function(url, params) {
+        Vue.prototype.axiosGet = function(url, params) {
             return request({
                 url: url,
                 method: 'get',
@@ -10,7 +10,7 @@ export default {
             })
         };
 
-        Vue.prototype.post = function(url, data) {
+        Vue.prototype.axiosPost = function(url, data) {
             return request({
                 url: url,
                 method: 'post',

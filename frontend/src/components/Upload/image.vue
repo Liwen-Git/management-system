@@ -2,12 +2,13 @@
     <div>
         <el-upload
                 class="uploader"
-                :action="action"
-                :headers="headerObj"
+                action="action"
+                :http-request="uploadImage"
                 :list-type="listType"
                 :file-list="fileList"
                 :on-preview="preview ? handlePreview : null"
                 :on-success="handleUploadSuccess"
+                :on-error="handleUploadError"
                 :before-upload="beforeUpload"
                 :on-remove="handleRemove"
                 :disabled="disabled"
@@ -43,6 +44,8 @@
      *      listType: 图片列表类型: picture-card/picture/text, 默认: picture-card
      *      preview: 是否可预览图片
      *      multiple: 是否支持多文件上传
+     *      valueType: 返回图片数据类型 默认：array
+     *      uploadUrl: 自定义上传方法的上传地址
      *  功能:
      *      图片上传功能
      *      删除按钮
@@ -66,13 +69,14 @@
             listType: {type: String, default: 'picture-card'},
             preview: {type: Boolean, default: false},
             data: {type: Object, default: () => {}},
-            multiple: {type: Boolean, default: false}
+            multiple: {type: Boolean, default: false},
+            valueType: {type: String, default: 'array'},
+            uploadUrl: {type: String, default: '/upload/image'}
         },
         mixins: [emitter],
         data() {
             return {
                 headerObj: {Authorization: getToken()},
-                valueType: 'array',
                 fileList: [],
                 isShow: false,
                 previewImage: ''
@@ -116,37 +120,45 @@
                 this.fileList = fileList;
                 this.emitInput()
             },
+            uploadImage(param){
+                const formData = new FormData();
+                formData.append('file', param.file);
+                this.axiosPost(this.uploadUrl, formData).then(res => {
+                    param.onSuccess(res)
+                }).catch(err => {
+                    param.onError(err)
+                })
+            },
             handleUploadSuccess(res, file, fileList) {
                 const width = this.width;
                 const height = this.height;
-                if (res && res.code === 20000) {
-                    if (
-                        (!width || width <= 0 || parseInt(res.data.width) === width) &&
-                        (!height || height <= 0 || parseInt(res.data.height) === height)
-                    ) {
-                        file.url = res.data.url;
-                        this.fileList = fileList;
-                        this.emitInput();
-                    } else {
-                        fileList.forEach(function (item, index) {
-                            if (item === file) {
-                                fileList.splice(index, 1)
-                            }
-                        });
-                        this.$message.error('请上传图片尺寸为' + width + 'px*' + height + 'px且大小不能超过2MB的图片')
-                        return false;
-                    }
-                    this.$emit('success')
+                if (
+                    (!width || width <= 0 || parseInt(res.width) === width) &&
+                    (!height || height <= 0 || parseInt(res.height) === height)
+                ) {
+                    file.url = res.url;
+                    this.fileList = fileList;
+                    this.emitInput();
                 } else {
                     fileList.forEach(function (item, index) {
                         if (item === file) {
                             fileList.splice(index, 1)
                         }
                     });
-                    this.$message.error(res.message || '文件上传失败');
-                    this.$emit('fail')
+                    this.$message.error('请上传图片尺寸为' + width + 'px*' + height + 'px且大小不能超过2MB的图片')
+                    return false;
                 }
+                this.$emit('success')
                 this.$emit('complete')
+            },
+            handleUploadError (err, file, fileList) {
+                fileList.forEach(function (item, index) {
+                    if (item === file) {
+                        fileList.splice(index, 1)
+                    }
+                });
+                this.$message.error('文件上传失败：' + err.message);
+                this.$emit('fail')
             },
             beforeUpload(file) {
                 const imgTypes = ['image/png', 'image/jpeg', 'image/gif'];

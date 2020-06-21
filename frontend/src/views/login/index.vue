@@ -166,7 +166,7 @@
                 }, {})
             },
             getCaptcha() {
-                this.get('/captcha').then(res => {
+                this.axiosGet('/captcha').then(res => {
                     this.captchaSrc = res.img;
                     this.loginForm.key = res.key;
                 })

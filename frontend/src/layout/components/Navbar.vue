@@ -140,7 +140,7 @@
             changePassword() {
                 this.$refs.passwordForm.validate(valid => {
                     if (valid) {
-                        this.post('/user/change/password', this.formData).then(() => {
+                        this.axiosPost('/user/change/password', this.formData).then(() => {
                             this.$message.success('修改密码成功');
                             this.cancelForm();
                         })
