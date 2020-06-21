@@ -10,7 +10,7 @@
         </div>
 
         <aside style="margin-top: 15px;">图片上传组件</aside>
-        <upload-image></upload-image>
+        <upload-image :preview="true" :multiple="true"></upload-image>
     </div>
 </template>
 
