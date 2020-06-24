@@ -55,4 +55,22 @@ class UploadController extends Controller
 
         return ['status' => $status, 'name' => $name];
     }
+
+    public function uploadFile()
+    {
+        $file = request()->file('file');
+        $dir = request('dir', 'file');
+
+        $savePath = $dir . '/'. auth()->user()->id;
+        $name = uniqid() . $file->getClientOriginalName();
+
+        $path = $file->storeAs($savePath, $name, 'api');
+        $url = $url = asset('api/'. $path);
+
+        return Result::success([
+            'url' => $url,
+            'name' => $name,
+            'size' => $file->getSize()
+        ]);
+    }
 }

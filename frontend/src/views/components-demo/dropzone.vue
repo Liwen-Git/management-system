@@ -11,6 +11,9 @@
 
         <aside style="margin-top: 15px;">图片上传组件</aside>
         <upload-image :preview="true" :multiple="true"></upload-image>
+
+        <aside style="margin-top: 15px;">文件上传组件</aside>
+        <upload-file :drag="false"></upload-file>
     </div>
 </template>
 
@@ -18,12 +21,14 @@
     import Dropzone from '@/components/Dropzone'
 
     import UploadImage from '@/components/Upload/image.vue'
+    import UploadFile from '@/components/Upload/file.vue'
 
     export default {
         name: 'DropzoneDemo',
         components: {
             Dropzone,
-            UploadImage
+            UploadImage,
+            UploadFile
         },
         methods: {
             dropzoneS(file) {

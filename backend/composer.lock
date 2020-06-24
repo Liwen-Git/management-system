@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06e3265d77384606bf69814ce761506d",
+    "content-hash": "b8971c612ef6df74ec3e9f35f06be285",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4475,6 +4475,48 @@
             "time": "2020-03-04T11:21:28+00:00"
         },
         {
+            "name": "viest/php-ext-xlswriter-ide-helper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/viest/php-ext-xlswriter-ide-helper.git",
+                "reference": "0d9c2d39802e6c1ebbad7d515d860a50c131f12e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/viest/php-ext-xlswriter-ide-helper/zipball/0d9c2d39802e6c1ebbad7d515d860a50c131f12e",
+                "reference": "0d9c2d39802e6c1ebbad7d515d860a50c131f12e",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Vtiful\\Kernel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "viest",
+                    "email": "wjx@php.net"
+                }
+            ],
+            "description": "PHP Extension Xlswriter IDE Helper",
+            "time": "2020-06-08T13:56:32+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v4.1.6",
             "source": {
@@ -6815,7 +6857,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "viest/php-ext-xlswriter-ide-helper": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
