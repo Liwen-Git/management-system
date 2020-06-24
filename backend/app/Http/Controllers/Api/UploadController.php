@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Result;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Vtiful\Kernel\Excel;
 
 class UploadController extends Controller
 {
@@ -18,7 +19,7 @@ class UploadController extends Controller
         $file = request()->file('file');
 
         $content = file_get_contents($file->getRealPath());
-        $savePath = 'image/'. auth()->user()->id;
+        $savePath = 'image';
         $extension = $file->getClientOriginalExtension();
 
         $nameArr = self::makeName($content, $extension, $savePath);
@@ -51,26 +52,70 @@ class UploadController extends Controller
     {
         $name = md5($content) . '.'. $extension;
         $disk = Storage::disk('api');
-        $status = $disk->exists($path. $name);
+        $status = $disk->exists($path. '/'. $name);
 
         return ['status' => $status, 'name' => $name];
     }
 
+    /**
+     * 文件上传
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function uploadFile()
     {
         $file = request()->file('file');
-        $dir = request('dir', 'file');
+        $savePath = request('dir', 'file');
 
-        $savePath = $dir . '/'. auth()->user()->id;
         $name = uniqid() . $file->getClientOriginalName();
 
         $path = $file->storeAs($savePath, $name, 'api');
-        $url = $url = asset('api/'. $path);
+        $url = asset('api/'. $path);
 
         return Result::success([
             'url' => $url,
             'name' => $name,
             'size' => $file->getSize()
         ]);
+    }
+
+    /**
+     * excel 文件上传 文件保存并解析
+     */
+    public function uploadAndReadExcel()
+    {
+        $file = request()->file('file');
+        $savePath = request('dir', 'excel_import');
+
+        $name = uniqid() . $file->getClientOriginalName();
+
+        $file->storeAs($savePath, $name, 'api');
+
+        $config = ['path' => storage_path('app/api/'. $savePath)];
+        $excel = new Excel($config);
+
+        $data = $excel->openFile($name)
+            ->openSheet()
+            ->getSheetData();
+
+        /**
+         array:4 [
+            0 => array:3 [
+                0 => "a"
+                1 => "b"
+                2 => "c"
+            ]
+            1 => array:3 [
+                0 => 11
+                1 => 22
+                2 => 33
+            ]
+            2 => array:3 [
+                0 => 111
+                1 => 222
+                2 => 333
+            ]
+         ]
+         */
+        dd($data);
     }
 }

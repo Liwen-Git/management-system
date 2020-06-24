@@ -50,6 +50,11 @@ composer install
 php artisan jwt:secret
 ```
 
+##### storage软链接， 并注意`storage`目录权限问题
+```php
+php artisan storage:link
+```
+
 ##### 配置.env中的相关配置，如数据库、redis、session等
 
 

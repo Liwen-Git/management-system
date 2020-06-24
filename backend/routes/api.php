@@ -54,4 +54,8 @@ Route::namespace('Api')
         // 上传
         Route::post('upload/image', 'UploadController@uploadImage');
         Route::post('upload/file', 'UploadController@uploadFile');
+        Route::post('upload/excel', 'UploadController@uploadAndReadExcel');
+
+        // 导出
+        Route::get('export/demo', 'ExportController@exportDemo');
     });
