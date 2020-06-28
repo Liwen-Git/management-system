@@ -7,19 +7,23 @@
 ```php
 # php.ini配置
 upload_max_filesize = 64M
+
 post_max_size = 64M
+
 memory_limit = 256M
 ```
 * php扩展：redis、xlswriter 
 ```php
 # php 扩展
 pecl install redis
+
 pecl install xlswriter
 ```
 * nginx
 ```php
 # nginx 分配给请求数据的buffer大小
 client_body_buffer_size 5m;
+
 # nginx中 客户端请求服务器最大允许大小
 client_max_body_size 20m;
 ```
@@ -32,7 +36,7 @@ client_max_body_size 20m;
 
 ##### 复制.envexample为.env
 ```php
-cp .envexample .env
+cp .env.example .env
 ```
 
 ##### 生成Application key
@@ -52,11 +56,24 @@ php artisan jwt:secret
 
 ##### storage软链接， 并注意`storage`目录权限问题
 ```php
+mkdir -p storage/app/api
+
+chmod -R 0777 storage
+
 php artisan storage:link
 ```
 
 ##### 配置.env中的相关配置，如数据库、redis、session等
 
+##### mysql配置数据库，并生成数据表
+```php
+php artisan migrate
+```
+
+##### 初始数据填充
+```php
+php artisan db:seed --class=UserSeeder
+```
 
 #### 前台
 

@@ -31,7 +31,8 @@ class UploadController extends Controller
         }
 
         $url = asset('api/'. $path);
-        $image = Image::make($url);
+        // Image::make($url) 在laradock中报错：Unable to init from given url
+        $image = Image::make(storage_path('app/api/'. $path));
 
         return Result::success([
             'path'=> $path,
