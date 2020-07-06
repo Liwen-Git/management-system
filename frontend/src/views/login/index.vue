@@ -1,7 +1,7 @@
 <template>
     <div class="login-container">
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
-                 label-position="left">
+                 label-position="left" @keyup.enter.native="handleLogin">
 
             <div class="title-container">
                 <h3 class="title">管理系统</h3>
